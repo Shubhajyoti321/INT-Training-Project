@@ -24,13 +24,11 @@ export const deletePatient = (userId, onSuccess) => {
 };
 
 
-export const updatePatient = (userId, onSuccess) => {
+export const updatePatient = (payload, onSuccess) => {
 	return (dispatch, getState) => {
             dispatch ({
                 type : UPDATEPATIENT,
-                payload: {
-                    patientID: userId,
-                },
+                payload,
             });
             onSuccess && onSuccess()
 	};

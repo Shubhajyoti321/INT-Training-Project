@@ -13,7 +13,7 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import Login from '../pages/login/Login';
 import PageNotFound from '../pages/error-pages/PageNotFound';
 import Register from '../pages/login/Register';
-import Edit from '../pages/dashboard/Edit';
+//import Edit from '../pages/dashboard/Edit';
 // const Dashboard = withSuspense(React.lazy(() => import(/* webpackChunkName: "Dashboard" */ '../pages/Dashboard')) ,<TransparentLoader/>);
 
 const Routes = () => {
@@ -30,7 +30,7 @@ const Routes = () => {
             <PublicRoute exact path="/" component={Login} />
             <PublicRoute exact path="/register" component={Register} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/update/:id" component={Edit} />
+            {/* <PrivateRoute exact path="/update/:id" component={Edit} /> */}
             
             {/* Use below code for dashboard when login form is done */}
             {/* <PrivateRoute exact path="/" component={Dashboard} /> */}

@@ -11,7 +11,7 @@ const patient = (state = initialStates, action) => {
 
 		case ADDPATIENT:
 			const patientDetails = action.payload
-			console.log("-----------",patientDetails)
+			console.log("-----------", patientDetails)
 			return {
 				...state,
 				patientList: [...state.patientList, patientDetails]
@@ -25,12 +25,16 @@ const patient = (state = initialStates, action) => {
 			};
 
 		case UPDATEPATIENT:
-			const updatePatientId = action.payload.patientID
+			const index = state.patientList.findIndex(user => user.patientId === action.payload.patientId);
+			const newPatientList = [...state.patientList];
+			newPatientList[index].name = action.payload.name;
+			newPatientList[index].phone = action.payload.phone;
+			newPatientList[index].email = action.payload.email;
+			newPatientList[index].address = action.payload.address;
 			return {
 				...state,
-				patientList: [...state.patientList, updatePatientId]
+				patientList: newPatientList
 			};
-
 		default:
 			return state;
 	}

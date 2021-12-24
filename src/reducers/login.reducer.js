@@ -5,6 +5,7 @@ import { LOGINFORM, LOGOUTFORM } from "../action-types/action.types";
 const initialStates = {
 	isLoggedin:false,
 	id:"",
+	name:"",
     email:"",
 };
 
@@ -13,10 +14,13 @@ const login = (state = initialStates, action) => {
 		case LOGINFORM:
 			const loggedInUserEmail = action.payload.email;
 			const userId = action.id;
+			const userName = action.name;
+			console.log(action)
 			return {
 				...state,
 				isLoggedin: true,
 				id: userId,
+				name: userName,
 				email: loggedInUserEmail,
 				
 			};
@@ -25,6 +29,7 @@ const login = (state = initialStates, action) => {
 				...state,
 				isLoggedin:false,
 				id: "",
+				name: "",
 				email:"",
 			};
 		default:

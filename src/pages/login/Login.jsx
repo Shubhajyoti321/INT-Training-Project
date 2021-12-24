@@ -7,10 +7,13 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/login.action';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import sideImg from '../../assets/images/infoGraphic.jpg';
 
 const initialValues = {
-    email:"",
-    password:""
+    email: "",
+    password: ""
 }
 
 const validationSchema = yup.object({
@@ -26,23 +29,36 @@ const Login = (props) => {
 
     const dispatch = useDispatch();
     const isloggedin = useSelector((state) => state.login.isLoggedin)
- 
+
+    var bcrypt = require('bcryptjs');
+    var hash = bcrypt.hashSync('password', 8);
+    bcrypt.compareSync("password", hash);
+
     const handleSubmit = (values, actions) => {
 
         const loggedInUser = {
-            email:values.email,
-            password:values.password
+            email: values.email,
+            password: hash
         }
 
         dispatch(login(
-            loggedInUser, 
+            loggedInUser,
             (msg) => {
-                alert(msg)
-            }, 
+                toast.success(msg)
+            },
             (err) => {
                 actions.setErrors(err)
             }
         ))
+
+        //Reset Form 
+        actions.setSubmitting(false);
+        actions.resetForm({
+            values: {
+                email: "",
+                password: "",
+            },
+        });
 
     }
 
@@ -52,59 +68,69 @@ const Login = (props) => {
 
     return (
         <div className={style.myContainer}>
-            <div style={{ maxWidth: "350px", width: "100%" }}>
-                <h2 style={{ textAlign: "center", color: "#fff", marginBottom: "20px"}}>Login</h2>
-                <Formik
-                    validationSchema={validationSchema}
-                    initialValues={initialValues}
-                    onSubmit={handleSubmit}
-                    // initialValues={{
-                    //     name: "",
-                    //     email: "",
-                    //     password: ""
-                    // }}
-                    // onSubmit={(data) => {
-                    //     try {
-                    //         dispatch(login(data,
-                    //             () => {
-                    //                 alert("Success")
-                    //             },
-                    //             () => {
-                    //                 alert("Failed")
-                    //             }
+            <div className={style.smContainer}>
+                <div className="row">
+                    <div className="col-sm-6 position-relative">
+                        <img className='' src={sideImg} className={style.lftImg} alt="" />
+                    </div>
+                    <div className="col-sm-6">
+                        <div className="p-4">
+                            <h2 className={style.loginTitle}>Login</h2>
+                            <Formik
+                                validationSchema={validationSchema}
+                                initialValues={initialValues}
+                                onSubmit={handleSubmit}
+                            // initialValues={{
+                            //     name: "",
+                            //     email: "",
+                            //     password: ""
+                            // }}
+                            // onSubmit={(data) => {
+                            //     try {
+                            //         dispatch(login(data,
+                            //             () => {
+                            //                 alert("Success")
+                            //             },
+                            //             () => {
+                            //                 alert("Failed")
+                            //             }
 
-                    //         ));
-                    //     } catch (err) {
-                    //         console.log(err)
-                    //     }
-                    // }}
-                >
-                    {({ values, errors, handleChange, isSubmitting, setFieldValue, touched }) => {
-                        return (
-                            <Form className={style.smContainer}>
-                                <div className="mb-3">
-                                    <label>Email</label>
-                                    <Field name="email" type="email" value={values.email} className="form-control" placeholder="Enter email" />
-                                    <span className="text-danger">
-                                        <ErrorMessage name="email" />
-                                    </span>
-                                </div>
-                                <div className="mb-3">
-                                    <label>Password</label>
-                                    <Field name="password" type="password" value={values.password} className="form-control" placeholder="Enter Password" />
-                                    <span className="text-danger">
-                                        <ErrorMessage name="password" />
-                                    </span>
-                                </div>
-                                <Button className="w-100 mb-3" variant="warning" type="submit">
-                                    Login
-                                </Button>
-                                <Link className={style.loginSignUpTxt} to="/register">Create new account</Link>
-                            </Form>
-                        )
-                    }}
-                </Formik>
+                            //         ));
+                            //     } catch (err) {
+                            //         console.log(err)
+                            //     }
+                            // }}
+                            >
+                                {({ values, errors, handleChange, isSubmitting, setFieldValue, touched }) => {
+                                    return (
+                                        <Form className={style.smContainer}>
+                                            <div className="mb-3">
+                                                <label>Email</label>
+                                                <Field name="email" type="email" value={values.email} className="form-control" placeholder="Enter email" />
+                                                <span className="text-danger">
+                                                    <ErrorMessage name="email" />
+                                                </span>
+                                            </div>
+                                            <div className="mb-3">
+                                                <label>Password</label>
+                                                <Field name="password" type="password" value={values.password} className="form-control" placeholder="Enter Password" />
+                                                <span className="text-danger">
+                                                    <ErrorMessage name="password" />
+                                                </span>
+                                            </div>
+                                            <Button className="w-100 mb-3" variant="warning" type="submit">
+                                                Login
+                                            </Button>
+                                            <Link className={style.loginSignUpTxt} to="/register">Create new account</Link>
+                                        </Form>
+                                    )
+                                }}
+                            </Formik>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

@@ -1,0 +1,4 @@
+.global-class-name{font-size:30px; color:#f7c600;}
+.custumLinkBtn{ margin: 0 5px; padding:2px 5px; font-size:16px; font-weight: 600;}
+.custumLinkBtn:focus{ outline: 0; box-shadow: none;}
+
