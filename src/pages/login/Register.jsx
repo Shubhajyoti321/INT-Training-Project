@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../actions/register.action';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import sideImg from '../../assets/images/infoGraphic.jpg';
+import sideImg from '../../assets/images/infoGraphic.png';
 
 const validationSchema = yup.object({
     name: yup.string().required("Name is required!"),
@@ -145,7 +145,9 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer
+                position="top-right"
+            />
         </div>
     )
 }

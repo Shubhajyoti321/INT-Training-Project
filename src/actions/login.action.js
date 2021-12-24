@@ -21,11 +21,11 @@ export const login = (payload, onSuccess, onError) => {
                 id,
                 name
             })
-            onSuccess && onSuccess("Login Successfull");
+            onSuccess && onSuccess("Login Successfull!");
 
         } else {
             console.log("else")
-            onError && onError({password:"Invalit Paswaord", email:"Invalid Email"});
+            onError && onError({password:"Invalit Paswaord!", email:"Invalid Email!"});
 
         }
     };

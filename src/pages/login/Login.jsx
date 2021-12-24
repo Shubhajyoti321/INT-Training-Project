@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions/login.action';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import sideImg from '../../assets/images/infoGraphic.jpg';
+import sideImg from '../../assets/images/infoGraphic.png';
 
 const initialValues = {
     email: "",
@@ -47,7 +47,7 @@ const Login = (props) => {
                 toast.success(msg)
             },
             (err) => {
-                actions.setErrors(err)
+                toast.error(actions.setErrors(err))
             }
         ))
 
@@ -71,7 +71,7 @@ const Login = (props) => {
             <div className={style.smContainer}>
                 <div className="row">
                     <div className="col-sm-6 position-relative">
-                        <img className='' src={sideImg} className={style.lftImg} alt="" />
+                        <img src={sideImg} className={style.lftImg} alt="Info" />
                     </div>
                     <div className="col-sm-6">
                         <div className="p-4">
@@ -130,7 +130,9 @@ const Login = (props) => {
                     </div>
                 </div>
             </div>
-            <ToastContainer />
+            <ToastContainer
+                position="top-right"
+            />
         </div>
     )
 }

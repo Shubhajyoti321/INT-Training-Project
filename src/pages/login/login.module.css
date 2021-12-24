@@ -2,4 +2,4 @@
 .smContainer{max-width: 800px; width: 100%; margin: 0 auto; background-color:rgba(255, 255, 255, 1); border-radius:0;}
 .loginSignUpTxt{font-weight: 600; cursor: pointer; color: #000; text-decoration: none;}
 .loginTitle{color: #f86033;}
-.lftImg{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+.lftImg{position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width:78%; opacity: 0.6;}

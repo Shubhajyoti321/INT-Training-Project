@@ -5,7 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import style from './dashboard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPatient } from '../../actions/patient.action';
+
 import { updatePatient } from '../../actions/patient.action';
 import { deletePatient } from '../../actions/patient.action';
 import { logout } from '../../actions/login.action';
@@ -13,8 +13,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IconContext } from "react-icons";
 import { FiLogOut } from "react-icons/fi";
-import { BsBoxArrowRight, BsPencil, BsTrash } from "react-icons/bs";
+import { BsPencil, BsTrash } from "react-icons/bs";
 import logoImg from '../../assets/images/logo.png';
+import PatientForm from './PatientForm';
 
 
 const initialValues = {
@@ -62,44 +63,6 @@ const Dashboard = () => {
     const patientDetailsList = useSelector((state) => state.patient.patientList)
     const segregatedPatientsList = patientDetailsList.filter(segregatedUser => segregatedUser.id === loggedInUserID)
     const dispatch = useDispatch();
-
-    const handleSubmit = (values, actions) => {
-
-        const newpatientId = values.name.slice(0, 2).toUpperCase() + new Date().getTime().toString()
-
-        const patientData = {
-            id: loggedInUserID,
-            patientId: newpatientId,
-            name: values.name,
-            phone: values.phone,
-            email: values.email,
-            address: values.address,
-        }
-
-        dispatch(addPatient(
-            patientData,
-            () => { toast.success("Successfully added!") },
-            () => { toast.error("Failed to add!") }
-            //(err) => { actions.setError(err)}
-        ))
-        
-        //Reset Form 
-        actions.setSubmitting(false);
-        actions.resetForm({
-            values: {
-                // the type of `values` inferred to be Blog
-                id: "",
-                patientId: "",
-                name: "",
-                phone: "",
-                email: "",
-                address: "",
-            },
-            // you can also set the other form states here
-        });
-
-    }
-
 
     const handleUpdate = (values, actions) => {
 
@@ -161,54 +124,8 @@ const Dashboard = () => {
                 <div className="row p-3 mb-5 bg-light">
                     <div className="col-sm-12">
                         <h4 className='mb-3'>Add Patient</h4>
-                        <div style={{ width: "100%", margin: "0 auto" }}>
-                            <Formik
-                                validationSchema={validationSchema}
-                                initialValues={initialValues}
-                                onSubmit={handleSubmit}
-                            >
-                                {({ values, errors, handleChange, isSubmitting, setFieldValue, touched }) => {
-                                    return (
-                                        <Form>
-                                            <div className='row'>
-                                                <div className="col-md-3 mb-3">
-                                                    {/* <label>Name</label> */}
-                                                    <Field name="name" type="name" value={values.name} className="form-control" placeholder="Enter Name" />
-                                                    <span className="text-danger">
-                                                        <ErrorMessage name="name" />
-                                                    </span>
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                                    {/* <label>Phone No</label> */}
-                                                    <Field name="phone" type="number" value={values.phone} className="form-control" placeholder="Enter Phone no" />
-                                                    <span className="text-danger">
-                                                        <ErrorMessage name="phone" />
-                                                    </span>
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                                    {/* <label>Email</label> */}
-                                                    <Field name="email" type="email" value={values.email} className="form-control" placeholder="Enter Email ID" />
-                                                    <span className="text-danger">
-                                                        <ErrorMessage name="email" />
-                                                    </span>
-                                                </div>
-                                                <div className="col-md-3 mb-3">
-                                                    {/* <label>Address</label> */}
-                                                    <Field name="address" type="text" value={values.address} className="form-control" placeholder="Enter address no" />
-                                                    <span className="text-danger">
-                                                        <ErrorMessage name="address" />
-                                                    </span>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <button className="mb-3 btn btn-warning" type="submit">
-                                                        Add
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </Form>
-                                    )
-                                }}
-                            </Formik>
+                        <div>
+                            <PatientForm/>
                         </div>
                     </div>
                 </div>
@@ -314,7 +231,9 @@ const Dashboard = () => {
                     </Button>
                 </Modal.Footer> */}
             </Modal>
-            <ToastContainer />
+            <ToastContainer
+                position="top-right"
+            />
 
         </>
 
